@@ -19,7 +19,6 @@ function EMICalulatorScreen() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(duration);
 
     const amount = (discountAmt - downpaymentAmt) / duration;
     setCalculateAmt(Math.round((amount + Number.EPSILON) * 100) / 100);
@@ -73,7 +72,7 @@ function EMICalulatorScreen() {
           </Card>
           <Card sx={{ mt: 1 }}>
             <Typography className="downpaymentTextStyle">EMI</Typography>
-            {calculateAmt>0 && (
+            {calculateAmt > 0 && (
               <Typography className="downpaymentAmtStyle">
                 ₹{calculateAmt}
               </Typography>
