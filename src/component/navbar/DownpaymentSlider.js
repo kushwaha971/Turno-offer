@@ -2,7 +2,7 @@ import { Box, Slider } from "@mui/material";
 import React from "react";
 
 function DownpaymentSlider(props) {
-  const { minDownpayment, discountAmt, setDownpaymentAmt } = props;
+  const { minDownpayment, discountAmount, setDownpaymentAmount } = props;
   return (
     <Box
       sx={{
@@ -12,11 +12,11 @@ function DownpaymentSlider(props) {
       <Slider
         sx={{ color: "#E8345E" }}
         defaultValue={minDownpayment}
-        max={discountAmt}
+        max={discountAmount}
         valueLabelDisplay="auto"
         step={1000}
         onChange={(e, value) => {
-          setDownpaymentAmt(value);
+          setDownpaymentAmount(value);
         }}
       />
     </Box>

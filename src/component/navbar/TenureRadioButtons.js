@@ -36,7 +36,7 @@ const TenureComponentStyle = styled(Box)(({ theme }) => ({
   },
 }));
 
-function TenureRadio(props) {
+function TenureRadioButton(props) {
   const { handleDuration, handleSubmit } = props;
   return (
     <TenureComponentStyle>
@@ -75,4 +75,4 @@ function TenureRadio(props) {
   );
 }
 
-export default TenureRadio;
+export default TenureRadioButton;
