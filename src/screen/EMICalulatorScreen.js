@@ -11,21 +11,15 @@ function EMICalulatorScreen() {
   const discountAmount = loanAmount - (loanAmount * discountPercentage) / 100;
   const minDownpayment = 49000;
 
-  const [duration, setDuration] = React.useState();
-  const [calculatedEMI, setCalculateEMI] = React.useState();
+  const [duration, setDuration] = React.useState(36);
+
   const [downpaymentAmount, setDownpaymentAmount] = React.useState(49000);
 
-  const handleDuration = (e) => {
-    setDuration(e.target.value);
-  };
+  // Bydefault tenure
+  const amount = (discountAmount - downpaymentAmount) / duration;
+  const rslt = Math.round((amount + Number.EPSILON) * 100) / 100;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // EMI calculation
-    const amount = (discountAmount - downpaymentAmount) / duration;
-    setCalculateEMI(Math.round((amount + Number.EPSILON) * 100) / 100);
-  };
+  const [calculatedEMI, setCalculateEMI] = React.useState(rslt);
 
   return (
     <EmiScreenStyle>
@@ -64,23 +58,25 @@ function EMICalulatorScreen() {
               minDownpayment={minDownpayment}
               discountAmount={discountAmount}
               setDownpaymentAmount={setDownpaymentAmount}
+              duration={duration}
+              calculatedEMI={calculatedEMI}
+              setCalculateEMI={setCalculateEMI}
             />
 
             <Typography className="minDownpaymentAmtStyle">
               Min ₹{minDownpayment}
             </Typography>
             <TenureRadioButton
-              handleDuration={handleDuration}
-              handleSubmit={handleSubmit}
+              setDuration={setDuration}
+              discountAmount={discountAmount}
+              downpaymentAmount={downpaymentAmount}
+              setCalculateEMI={setCalculateEMI}
             />
-          </Card>
-          <Card sx={{ mt: 1 }}>
+
             <Typography className="downpaymentTextStyle">EMI</Typography>
-            {calculatedEMI > 0 && (
-              <Typography className="downpaymentAmtStyle">
-                ₹{calculatedEMI}
-              </Typography>
-            )}
+            <Typography className="downpaymentAmtStyle">
+              ₹{calculatedEMI}
+            </Typography>
           </Card>
         </Box>
       </Box>
