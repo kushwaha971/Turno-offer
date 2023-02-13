@@ -1,13 +1,14 @@
 import { Box, Card, Typography } from "@mui/material";
 import React from "react";
-import DownpaymentSlider from "../component/navbar/DownpaymentSlider";
-import TenureRadioButton from "../component/navbar/TenureRadioButtons";
+import DownpaymentSlider from "../component/DownpaymentSlider";
+import TenureRadioButton from "../component/TenureRadioButtons";
 import EmiScreenStyle from "../css/EmiScreenStyle";
 
 function EMICalulatorScreen() {
   const discountPercentage = 10;
-  const loantAmount = 350000;
-  const discountAmount = loantAmount - (loantAmount * discountPercentage) / 100;
+  const loanAmount = 350000;
+  // Discount of 10%
+  const discountAmount = loanAmount - (loanAmount * discountPercentage) / 100;
   const minDownpayment = 49000;
 
   const [duration, setDuration] = React.useState();
@@ -21,6 +22,7 @@ function EMICalulatorScreen() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // EMI calculation
     const amount = (discountAmount - downpaymentAmount) / duration;
     setCalculateEMI(Math.round((amount + Number.EPSILON) * 100) / 100);
   };
@@ -48,7 +50,7 @@ function EMICalulatorScreen() {
                 </Typography>
               </div>
               <Typography className="loanAmtStyle">
-                <del>₹{loantAmount}</del>
+                <del>₹{loanAmount}</del>
               </Typography>
             </Box>
             <Typography className="downpaymentTextStyle">
