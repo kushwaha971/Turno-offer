@@ -1,18 +1,19 @@
 import { Box, Card, Typography } from "@mui/material";
-
 import React from "react";
 import DownpaymentSlider from "../component/navbar/DownpaymentSlider";
-import TenureRadio from "../component/navbar/TenureRadio";
+import TenureRadioButton from "../component/navbar/TenureRadioButtons";
 import EmiScreenStyle from "../css/EmiScreenStyle";
 
 function EMICalulatorScreen() {
-  const discountPer = 10;
-  const loanAmt = 350000;
-  const discountAmt = loanAmt - (loanAmt * discountPer) / 100;
+  const discountPercentage = 10;
+  const loantAmount = 350000;
+  const discountAmount = loantAmount - (loantAmount * discountPercentage) / 100;
   const minDownpayment = 49000;
+
   const [duration, setDuration] = React.useState();
-  const [calculateAmt, setCalculateAmt] = React.useState();
-  const [downpaymentAmt, setDownpaymentAmt] = React.useState(49000);
+  const [calculatedEMI, setCalculateEMI] = React.useState();
+  const [downpaymentAmount, setDownpaymentAmount] = React.useState(49000);
+
   const handleDuration = (e) => {
     setDuration(e.target.value);
   };
@@ -20,9 +21,10 @@ function EMICalulatorScreen() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const amount = (discountAmt - downpaymentAmt) / duration;
-    setCalculateAmt(Math.round((amount + Number.EPSILON) * 100) / 100);
+    const amount = (discountAmount - downpaymentAmount) / duration;
+    setCalculateEMI(Math.round((amount + Number.EPSILON) * 100) / 100);
   };
+
   return (
     <EmiScreenStyle>
       <Box sx={{ marginTop: "100px" }}>
@@ -39,42 +41,42 @@ function EMICalulatorScreen() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography className="loanTextStyle">Loan Amount</Typography>
                 <Typography className="discountValStyle">
-                  {discountPer}% OFF
+                  {discountPercentage}% OFF
                 </Typography>
                 <Typography className="discountAmtStyle">
-                  ₹{discountAmt}
+                  ₹{discountAmount}
                 </Typography>
               </div>
               <Typography className="loanAmtStyle">
-                <del>₹{loanAmt}</del>
+                <del>₹{loantAmount}</del>
               </Typography>
             </Box>
             <Typography className="downpaymentTextStyle">
               Downpayment
             </Typography>
             <Typography className="downpaymentAmtStyle">
-              ₹{downpaymentAmt}
+              ₹{downpaymentAmount}
             </Typography>
 
             <DownpaymentSlider
               minDownpayment={minDownpayment}
-              discountAmt={discountAmt}
-              setDownpaymentAmt={setDownpaymentAmt}
+              discountAmount={discountAmount}
+              setDownpaymentAmount={setDownpaymentAmount}
             />
 
             <Typography className="minDownpaymentAmtStyle">
               Min ₹{minDownpayment}
             </Typography>
-            <TenureRadio
+            <TenureRadioButton
               handleDuration={handleDuration}
               handleSubmit={handleSubmit}
             />
           </Card>
           <Card sx={{ mt: 1 }}>
             <Typography className="downpaymentTextStyle">EMI</Typography>
-            {calculateAmt > 0 && (
+            {calculatedEMI > 0 && (
               <Typography className="downpaymentAmtStyle">
-                ₹{calculateAmt}
+                ₹{calculatedEMI}
               </Typography>
             )}
           </Card>
