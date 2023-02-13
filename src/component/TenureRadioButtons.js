@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControlLabel,
   FormLabel,
   Radio,
@@ -19,36 +18,33 @@ const TenureComponentStyle = styled(Box)(({ theme }) => ({
     lineHeight: "30px",
     color: "#333333",
   },
-  ".btnStyle": {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "700",
-    fontSize: "10px",
-    lineHeight: "20px",
-    background: "#E8345E",
-    margin: 1,
-    textTransform: "capitalize",
-    borderRadius:'20px',
-    "&:hover": {
-      color: "#E8345E",
-      background: "#fff",
-    },
-  },
 }));
 
 function TenureRadioButton(props) {
-  const { handleDuration, handleSubmit } = props;
+  const { setDuration, discountAmount, downpaymentAmount, setCalculateEMI } =
+    props;
   return (
     <TenureComponentStyle>
       <Box sx={{ margin: "15px 20px" }}>
-        <form onSubmit={handleSubmit}>
+        <form>
           <FormLabel id="demo-error-radios" className="tenure">
             Tenure
           </FormLabel>
-          <RadioGroup onChange={handleDuration}>
+          <RadioGroup
+            onChange={(e) => {
+              setDuration(e.target.value);
+              const amount =
+                (discountAmount - downpaymentAmount) / e.target.value;
+              setCalculateEMI(
+                Math.round((amount + Number.EPSILON) * 100) / 100
+              );
+            }}
+            defaultValue={36}
+          >
             <FormControlLabel
               value={36}
               control={<Radio />}
+              defaultChecked
               label={
                 <Typography className="radioLabelStyle">36 Months</Typography>
               }
@@ -61,14 +57,6 @@ function TenureRadioButton(props) {
               }
             />
           </RadioGroup>
-          <Button
-            type="submit"
-            variant="contained"
-            className="btnStyle"
-            fullWidth
-          >
-            Calculate EMI
-          </Button>
         </form>
       </Box>
     </TenureComponentStyle>
